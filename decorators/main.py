@@ -1,3 +1,4 @@
+import time
 from functools import lru_cache, cache
 
 import requests
@@ -5,7 +6,7 @@ import re
 
 from benchmark import benchmark
 from counter import counter
-from logging import logging
+from logging_ import logging
 from memo import memo
 
 
@@ -49,14 +50,12 @@ def fib(n):
 
 # @cache
 # @lru_cache
-@benchmark
 def fib(n):
     if n < 2:
         return n
     return fib(n-2) + fib(n-1)
 
 
-@benchmark
 @memo
 def fib_memo(n):
     if n < 2:
@@ -64,18 +63,24 @@ def fib_memo(n):
     return fib_memo(n-2) + fib_memo(n-1)
 
 
-def main2():
+def main_fibonacci():
     print('Second part: fibonacci algorithm \n')
 
+    start_time = time.time()
     print("recursive Fibonacci algorithm:")
     fib(10)
+    end_time = time.time()
+    print(f"Время выполнения функции {fib.__name__}: {end_time - start_time}")
 
+    start_time = time.time()
     print("\nrecursive Fibonacci algorithm using memoization:")
     fib_memo(10)
-    print(fib_memo.cache)
+    end_time = time.time()
+    print(f"Время выполнения функции {fib_memo.__name__}: {end_time - start_time}")
+    print("cache: ", fib_memo.cache)
 
 
 if __name__ == '__main__':
     main()
-    main2()
+    main_fibonacci()
 
